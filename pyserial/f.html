@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serial Data Viewer</title>
+    <script>
+        async function fetchData() {
+            try {
+                let response = await fetch('http://127.0.0.1:5000/get_data');
+                let data = await response.json();
+                document.getElementById('soil-moisture').textContent = data["Soil Moisture Level"] || 'N/A';
+                document.getElementById('nitrogen').textContent = data["Nitrogen"] || 'N/A';
+                document.getElementById('phosphorus').textContent = data["Phosphorus"] || 'N/A';
+                document.getElementById('potassium').textContent = data["Potassium"] || 'N/A';
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        setInterval(fetchData, 5000);  // Fetch data every 5 seconds
+    </script>
+</head>
+<body>
+    <h1>Serial Data</h1>
+    <p><strong>Soil Moisture Level:</strong> <span id="soil-moisture">N/A</span></p>
+    <p><strong>Nitrogen:</strong> <span id="nitrogen">N/A</span></p>
+    <p><strong>Phosphorus:</strong> <span id="phosphorus">N/A</span></p>
+    <p><strong>Potassium:</strong> <span id="potassium">N/A</span></p>
+</body>
+</html>
